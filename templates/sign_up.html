@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Create Account</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family: "Segoe UI", sans-serif;
+    background:#f4f6f8;   /* LIGHT BACKGROUND */
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* Main Card */
+.signup-container{
+    background:#ffffff;
+    width:420px;
+    padding:35px 35px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
+}
+
+/* Heading */
+.signup-container h2{
+    text-align:center;
+    color:#222;
+    margin-bottom:10px;
+}
+
+.signup-container p.subtitle{
+    text-align:center;
+    font-size:14px;
+    color:#777;
+    margin-bottom:25px;
+}
+
+/* Extra account info section */
+.account-info{
+    background:#f8fafc;
+    border:1px solid #e6e9ee;
+    padding:15px;
+    border-radius:10px;
+    font-size:13px;
+    color:#555;
+    margin-bottom:20px;
+}
+
+/* Form spacing */
+form p{
+    margin-bottom:16px;
+}
+
+/* Inputs */
+input, textarea{
+    width:100%;
+    padding:12px 14px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:14px;
+    background:#fff;
+    transition:0.3s;
+}
+
+input:focus, textarea:focus{
+    outline:none;
+    border-color:#3b82f6;
+    box-shadow:0 0 0 3px rgba(59,130,246,0.15);
+}
+
+/* Button */
+button{
+    width:100%;
+    padding:12px;
+    background:#3b82f6;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#2563eb;
+}
+
+/* Error */
+.error-box{
+    background:#fdecec;
+    color:#b91c1c;
+    padding:10px;
+    border-radius:8px;
+    text-align:center;
+    font-size:13px;
+    margin-bottom:15px;
+}
+
+/* Login link */
+.login-link{
+    text-align:center;
+    margin-top:18px;
+    font-size:14px;
+}
+
+.login-link a{
+    color:#3b82f6;
+    text-decoration:none;
+    font-weight:600;
+}
+.login-link a:hover{
+    text-decoration:underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="signup-container">
+
+    <h2>Create Account</h2>
+    <p class="subtitle">Join us to access your personal dashboard</p>
+
+    <!-- Added Account Section -->
+    <div class="account-info">
+        ✔ Secure account <br>
+        ✔ Easy login access <br>
+        ✔ Manage your profile anytime
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.errors %}
+        <div class="error-box">
+            Please correct the errors below
+        </div>
+        {% endif %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Create Account</button>
+    </form>
+
+    <div class="login-link">
+        Already have an account?
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+
+</div>
+
+</body>
+</html>
