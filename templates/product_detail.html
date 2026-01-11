@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if !IE]><!-->
@@ -78,7 +77,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <div class="header-logo">
-                            <a href="index.html">
+                            <a href="">
                                 <span class="brand"></span>
                                 <span>Color</span>Admin
                                 <small>e-commerce frontend theme</small>
@@ -90,7 +89,7 @@
                     <div class="header-nav">
                         <div class=" collapse navbar-collapse" id="navbar-collapse">
                             <ul class="nav">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="">Home</a></li>
                                 <li class="dropdown dropdown-full-width dropdown-hover">
                                     <a href="#" data-toggle="dropdown">
                                         Our Store 
@@ -197,7 +196,7 @@
                                         <span class="arrow top"></span>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="index.html">Home (Default)</a></li>
+                                        <li><a href="">Home (Default)</a></li>
                                         <li><a href="index_fixed_header.html">Home (Fixed Header)</a></li>
                                         <li><a href="index_inverse_header.html">Home (Inverse Header)</a></li>
                                         <li><a href="search_results.html">Search Results</a></li>
@@ -243,7 +242,7 @@
                                     <span class="arrow top"></span>
                                 </a>
                     
-                                <div class="dropdown-menu dropdown-menu-cart p-0">
+                               <div class="dropdown-menu dropdown-menu-cart p-0">
                                     <div class="cart-header">
                                         <h4 class="cart-title">Shopping Bag (1) </h4>
                                     </div>
@@ -295,10 +294,20 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="my_account.html">
-                                    <img src="assets/img/user-1.jpg" class="user-img" alt="" /> 
-                                    <span class="hidden-md hidden-sm hidden-xs">Login / Register</span>
-                                </a>
+                                 {% if user.is_authenticated %}
+                                    <a href="{% url 'my_account' %}">
+                                        {% if user.customer_user.image %}
+                                            <img src="{{ user.customer_user.image.url }}"
+                                                 class="user-img"
+                                                 style="width:30px; height:30px; border-radius:50%; object-fit:cover;">
+                                        {% else %}
+                                            <img src="/media/default.png"
+                                                 class="user-img"
+                                                 style="width:30px; height:30px; border-radius:50%;">
+                                        {% endif %}
+                                        <span class="hidden-md hidden-sm hidden-xs">Hi, {{ user.username }}</span>
+                                    </a>
+                                {%endif%}
                             </li>
                         </ul>
                     </div>
@@ -332,18 +341,23 @@
                             <!-- BEGIN product-thumbnail -->
                             <div class="product-thumbnail">
                                 <ul class="product-thumbnail-list">
-                                    <li class="active"><a href="#" data-click="show-main-image" data-url="assets/img/iphone-6s-plus-2.jpg"><img src="assets/img/iphone-6s-plus-2.jpg" alt="" /></a></li>
-                                    <li><a href="#" data-click="show-main-image" data-url="assets/img/iphone-6s-plus-3.jpg"><img src="assets/img/iphone-6s-plus-3.jpg" alt="" /></a></li>
-                                    <li><a href="#" data-click="show-main-image" data-url="assets/img/iphone-6s-plus-4.jpg"><img src="assets/img/iphone-6s-plus-4.jpg" alt="" /></a></li>
-                                    <li><a href="#" data-click="show-main-image" data-url="assets/img/iphone-6s-plus-5.jpg"><img src="assets/img/iphone-6s-plus-5.jpg" alt="" /></a></li>
-                                    <li><a href="#" data-click="show-main-image" data-url="assets/img/iphone-6s-plus-6.jpg"><img src="assets/img/iphone-6s-plus-6.jpg" alt="" /></a></li>
-                                    <li><a href="#" data-click="show-main-image" data-url="assets/img/iphone-6s-plus-7.jpg"><img src="assets/img/iphone-6s-plus-7.jpg" alt="" /></a></li>
+                                        {% for img in images %}
+                                            <li class="{% if forloop.first %}active{% endif %}">
+                                                <a href="#"
+                                                   data-click="show-main-image"
+                                                   data-url="{{ img.image.url }}">
+                                                   
+                                                    <img src="{{ img.image.url }}" alt="{{ img.caption }}" />
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+
                                 </ul>
                             </div>
                             <!-- END product-thumbnail -->
                             <!-- BEGIN product-main-image -->
                             <div class="product-main-image" data-id="main-image">
-                                <img src="assets/img/iphone-6s-plus.png" alt="" />
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" />
                             </div>
                             <!-- END product-main-image -->
                         </div>
@@ -352,33 +366,39 @@
                         <div class="product-info">
                             <!-- BEGIN product-info-header -->
                             <div class="product-info-header">
-                                <h1 class="product-title"><span class="label label-success">41% OFF</span> Apple iPhone 6S Plus (16GB) Silver - #89270182 </h1>
+                                <h1 class="product-title">
+                                    {%if product.discount%}
+                                        <span class="label label-success">{{ product.discount }}% OFF</span>
+                                    {%endif%}
+
+                                    {{product.name}}
+                                </h1>
                                 <ul class="product-category">
-                                    <li><a href="#">iPhone</a></li>
-                                    <li>/</li>
-                                    <li><a href="#">mobile phone</a></li>
-                                    <li>/</li>
-                                    <li><a href="#">electronics</a></li>
-                                    <li>/</li>
-                                    <li><a href="#">lifestyle</a></li>
+                                     <li><a href="#">{{ product.category.name }}</a></li>
+
                                 </ul>
                             </div>
                             <!-- END product-info-header -->
                             <!-- BEGIN product-warranty -->
                             <div class="product-warranty">
-                                <div class="pull-right">Availability: In stock</div>
-                                <div><b>1 Year</b> Local Manufacturer Warranty</div>
+                                <div class="pull-right">
+                                    Availability:
+                                    {% if product.stock %}
+                                        <span class="text-success">In stock</span>
+                                    {% else %}
+                                        <span class="text-danger">Out of stock</span>
+                                    {% endif %}
+                                </div>
+                                <div>{{product.warranty}}</div>
                             </div>
                             <!-- END product-warranty -->
                             <!-- BEGIN product-info-list -->
                             <ul class="product-info-list">
-                                <li><i class="fa fa-circle"></i> 5.5" Retina HD Display with 3D Touch</li>
-                                <li><i class="fa fa-circle"></i> Fingerprint-resistant oleophobic coating</li>
-                                <li><i class="fa fa-circle"></i> A9 chip with 64-bit</li>
-                                <li><i class="fa fa-circle"></i> Ultrafast 4G LTE Advanced wireless</li>
-                                <li><i class="fa fa-circle"></i> New 12-megapixel iSight camera</li>
-                                <li><i class="fa fa-circle"></i> 4k video recording</li>
-                                <li><i class="fa fa-circle"></i> iOS 9 with Touch ID and Apple Pay</li>
+                                {% for feature in product.features.splitlines %}
+                                    <li><i class="fa fa-circle"></i> {{ feature }}</li>
+                                {%empty%}
+                                    <p>no features add</p>
+                                {% endfor %}
                             </ul>
                             <!-- END product-info-list -->
                             <!-- BEGIN product-social -->
@@ -394,13 +414,26 @@
                             <!-- END product-social -->
                             <!-- BEGIN product-purchase-container -->
                             <div class="product-purchase-container">
-                                <div class="product-discount">
-                                    <span class="discount">$869.00</span>
-                                </div>
-                                <div class="product-price">
-                                    <div class="price">$749.00</div>
-                                </div>
-                                <button class="btn btn-inverse btn-lg" type="submit">ADD TO CART</button>
+                                {% if product.discount %}
+                                    <div class="product-discount">
+                                        <span class="discount">$ {{ product.price }}</span>
+                                    </div>
+                                    <div class="product-price">
+                                        <div class="price">
+                                            $ {{ product.discounted_price  }}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="product-price">
+                                        <div class="price">Rs {{ product.price }}</div>
+                                    </div>
+                                {% endif %}
+                                <form method="post" action="{% url 'add_to_cart' product.id %}">
+                         {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">
+                                 Add to Cart
+                                </button>
+                            </form>
                             </div>
                             <!-- END product-purchase-container -->
                         </div>
@@ -420,72 +453,28 @@
                         <div id="product-tab-content" class="tab-content">
                             <!-- BEGIN #product-desc -->
                             <div class="tab-pane fade active in" id="product-desc">
-                                <!-- BEGIN product-desc -->
-                                <div class="product-desc">
-                                    <div class="image">
-                                        <img src="assets/img/product-main.jpg" alt="" />
+
+                                {% for img in images %}
+                                    <!-- BEGIN product-desc -->
+                                    <div class="product-desc {% if forloop.counter|divisibleby:2 %}right{% endif %}">
+                                        
+                                        <div class="image">
+                                            <img src="{{ img.image.url }}" alt="{{ img.caption }}" />
+                                        </div>
+
+                                        <div class="desc">
+                                            <p>{{ img.caption }}</p>
+                                            
+                                        </div>
+
                                     </div>
-                                    <div class="desc">
-                                        <h4>iPhone 6s</h4>
-                                        <p>
-                                            The moment you use iPhone 6s, you know you’ve never felt anything like it. With a single press, 3D Touch lets you do more than ever before. Live Photos bring your memories to life in a powerfully vivid way. And that’s just the beginning. Take a deeper look at iPhone 6s, and you’ll find innovation on every level.
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- END product-desc -->
-                                <!-- BEGIN product-desc -->
-                                <div class="product-desc right">
-                                    <div class="image">
-                                        <img src="assets/img/product-3dtouch.jpg" alt="" />
-                                    </div>
-                                    <div class="desc">
-                                        <h4>3D Touch</h4>
-                                        <p>
-                                            The original iPhone introduced the world to Multi-Touch, forever changing the way people experience technology. With 3D Touch, you can do things that were never possible before. It senses how deeply you press the display, letting you do all kinds of essential things more quickly and simply. And it gives you real-time feedback in the form of subtle taps from the all-new Taptic Engine.
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- END product-desc -->
-                                <!-- BEGIN product-desc -->
-                                <div class="product-desc">
-                                    <div class="image">
-                                        <img src="assets/img/product-cameras.jpg" alt="" />
-                                    </div>
-                                    <div class="desc">
-                                        <h4>Cameras</h4>
-                                        <p>
-                                            The 12-megapixel iSight camera captures sharp, detailed photos. It takes brilliant 4K video, up to four times the resolution of 1080p HD video. iPhone 6s also takes selfies worthy of a self-portrait with the new 5-megapixel FaceTime HD camera. And it introduces Live Photos, a new way to relive your favorite memories. It captures the moments just before and after your picture and sets it in motion with just the press of a finger.
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- END product-desc -->
-                                <!-- BEGIN product-desc -->
-                                <div class="product-desc right">
-                                    <div class="image">
-                                        <img src="assets/img/product-technology.jpg" alt="" />
-                                    </div>
-                                    <div class="desc">
-                                        <h4>Technology</h4>
-                                        <p>
-                                            iPhone 6s is powered by the custom-designed 64-bit A9 chip. It delivers performance once found only in desktop computers. You’ll experience up to 70 percent faster CPU performance, and up to 90 percent faster GPU performance for all your favorite graphics-intensive games and apps.
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- END product-desc -->
-                                <!-- BEGIN product-desc -->
-                                <div class="product-desc">
-                                    <div class="image">
-                                        <img src="assets/img/product-design.jpg" alt="" />
-                                    </div>
-                                    <div class="desc">
-                                        <h4>Design</h4>
-                                        <p>
-                                            Innovation isn’t always obvious to the eye, but look a little closer at iPhone 6s and you’ll find it’s been fundamentally improved. The enclosure is made from a new alloy of 7000 Series aluminum — the same grade used in the aerospace industry. The cover glass is the strongest, most durable glass used in any smartphone. And a new rose gold finish joins space gray, silver, and gold.
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- END product-desc -->
+                                    <!-- END product-desc -->
+                                {% empty %}
+                                    <p>No product description available.</p>
+                                {% endfor %}
+
                             </div>
+
                             <!-- END #product-desc -->
                             <!-- BEGIN #product-info -->
                             <div class="tab-pane fade" id="product-info">
@@ -711,36 +700,10 @@
                                             <div class="review-message">
                                                 Donec vel fermentum quam. Vivamus scelerisque enim eget tristique auctor. Vivamus tempus, turpis iaculis tempus egestas, leo augue hendrerit tellus, et efficitur neque massa at neque. Aenean efficitur eleifend orci at ornare.
                                             </div>
-                                            
                                         </div>
                                         <!-- END review -->
                                         <!-- BEGIN review -->
-                                        <div class="review">
-                                            <div class="review-info">
-                                                <div class="review-icon"><img src="assets/img/user-5.jpg" alt="" /></div>
-                                                <div class="review-rate">
-                                                    <ul class="review-star">
-                                                        <li class="active"><i class="fa fa-star"></i></li>
-                                                        <li class="active"><i class="fa fa-star"></i></li>
-                                                        <li class="active"><i class="fa fa-star"></i></li>
-                                                        <li class="active"><i class="fa fa-star"></i></li>
-                                                        <li class="active"><i class="fa fa-star"></i></li>
-                                                    </ul>
-                                                    (5/5)
-                                                </div>
-                                                <div class="review-name">Edward</div>
-                                                <div class="review-date">22/05/2016 9.30pm</div>
-                                            </div>                     
-                                            <div class="review-title">
-                                                I have an existing carrier contract or installment plan. Can I purchase with the iPhone Upgrade Program
-                                            </div>                
-                                            <div class="review-message">
-                                                Aliquam consequat ut turpis non interdum. Integer blandit erat nec sapien sollicitudin, a fermentum dui venenatis. Nullam consequat at enim et aliquet. Cras mattis turpis quis eros volutpat tristique vel a ligula. Proin aliquet leo mi, et euismod metus placerat sit amet.
-                                            </div>
-                                        </div>
-                                        <!-- END review -->
-                                    </div>
-                                    <!-- END col-7 -->
+                           <!-- END col-7 -->
                                     <!-- BEGIN col-5 -->
                                     <div class="col-md-5">
                                         <!-- BEGIN review-form -->
@@ -780,8 +743,6 @@
                                                     </select>
                                                 </div>            
                                                 <button type="submit" class="btn btn-inverse btn-lg">Submit Review</button>
-                                                
-                                                
                                             </form>
                                         </div>
                                         <!-- END review-form --> 
@@ -954,7 +915,8 @@
                         <ul class="list-unstyled list-product">
                             <li>
                                 <div class="image">
-                                    <img src="assets/img/iphone-6s.jpg" alt="" />
+                                   <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+
                                 </div>
                                 <div class="info">
                                     <h4 class="info-title">Iphone 6s</h4>

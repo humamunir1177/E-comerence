@@ -385,7 +385,9 @@
             <div class="container">
                 <!-- BEGIN checkout -->
                 <div class="checkout">
-                    <form action="checkout_payment.html" method="POST" name="form_shipping" class="form-horizontal">
+                    <form action="checkout_payment.html/" method="POST" name="form_shipping" class="form-horizontal">
+                            {% csrf_token %}
+
                         <!-- BEGIN checkout-header -->
                         <div class="checkout-header">
                             <!-- BEGIN row -->

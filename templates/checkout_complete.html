@@ -267,7 +267,7 @@
                                         <li><a href="product_detail.html">Product Details Page</a></li>
                                         <li><a href="checkout_cart.html">Checkout Cart</a></li>
                                         <li><a href="checkout_info.html">Checkout Shipping</a></li>
-                                        <li><a href="checkout_payment.html">Checkout Payment</a></li>
+                                        <li><a href="checkout_ment.html">Checkout Payment</a></li>
                                         <li><a href="checkout_complete.html">Checkout Complete</a></li>
                                         <li><a href="my_account.html">My Account</a></li>
                                         <li><a href="contact_us.html">Contact Us</a></li>
@@ -385,7 +385,9 @@
             <div class="container">
                 <!-- BEGIN checkout -->
                 <div class="checkout">
-                    <form action="checkout_info.html" method="POST" name="form_checkout">
+                    <form action="checkout_info.html/" method="POST" name="form_checkout">
+                            {% csrf_token %}
+
                         <!-- BEGIN checkout-header -->
                         <div class="checkout-header">
                             <!-- BEGIN row -->

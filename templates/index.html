@@ -201,8 +201,8 @@
                                         <li><a href="search_results.html">Search Results</a></li>
                                         <li><a href="product.html">Product Page</a></li>
                                         <li><a href="product_detail.html">Product Details Page</a></li>
-                                        <li><a href="checkout_cart">Checkout Cart</a></li>
-                                        <li><a href="checkout_info">Checkout Shipping</a></li>
+                                        <li><a href="checkout_cart.html">Checkout Cart</a></li>
+                                        <li><a href="checkout_info.html">Checkout Shipping</a></li>
                                         <li><a href="checkout_payment">Checkout Payment</a></li>
                                         <a href="{% url 'checkout_payment' %}">Pay</a>
 
@@ -413,7 +413,13 @@
                                 <p class="promotion-desc">A big step for small.<br />A beloved design. Now with more to love.</p>
                                 <a href="#" class="promotion-btn">View More</a>
                         
-<a href="{% url 'product_detail.html' %}">View Product</a>
+{% for product in products %}
+  <h3>{{ product.name }}</h3>
+  <p>Price: {{ product.price }}</p>
+
+  <!-- Link to product detail page -->
+  <a href="{% url 'product_detail' product.id %}">View Details</a>
+{% endfor %}
 
 
 
@@ -436,7 +442,7 @@
                                 <a href="#" class="promotion-btn">View More</a>
                              <!-- index.html -->
 
-<a href="{% url 'product_detail.html' %}">View Product</a>
+
 
 
 
@@ -467,8 +473,13 @@
                                 <a href="#" class="promotion-btn">View More</a>
                         <!-- index.html -->
 
-<a href="{% url 'product_detail.html' %}">View Product</a>
+{% for product in products %}
+  <h3>{{ product.name }}</h3>
+  <p>Price: {{ product.price }}</p>
 
+  <!-- Link to product detail page -->
+  <a href="{% url 'product_detail' product.id %}">View Details</a>
+{% endfor %}
 
 
 
@@ -490,7 +501,13 @@
                                 <p class="promotion-desc">Redesigned. Rechargeable. Remarkable.</p>
                                 <a href="#" class="promotion-btn">View More</a>
                           
-<a href="{% url 'product_detail.html' %}">View Product</a>
+{% for product in products %}
+  <h3>{{ product.name }}</h3>
+  <p>Price: {{ product.price }}</p>
+
+  <!-- Link to product detail page -->
+  <a href="{% url 'product_detail' product.id %}">View Details</a>
+{% endfor %}
 
                             </div>
                         </div>
@@ -506,7 +523,14 @@
                                 <p class="promotion-desc">Built for creativity on an epic scale.</p>
                                 <a href="#" class="promotion-btn">View More</a>
                              
-<a href="{% url 'product_detail.html' %}">View Product</a>
+{% for product in products %}
+  <h3>{{ product.name }}</h3>
+  <p>{{ product.price }}</p>
+
+  <!-- Correct link -->
+  <a href="{% url 'product_detail' product.id %}">View Details</a>
+{% endfor %}
+
 
                             </div>
                         </div>

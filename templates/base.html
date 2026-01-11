@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Shop</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 80%; margin-bottom: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        a { text-decoration: none; color: blue; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Shop</h1>
+        <nav>
+            <a href="{% url 'home_page' %}">Home</a> |
+            <a href="{% url 'cart' %}">Cart</a> |
+            <a href="{% url 'my_account' %}">My Account</a>
+        </nav>
+        <hr>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+        <hr>
+        <p>© 2026 My Shop</p>
+    </footer>
+</body>
+</html>
